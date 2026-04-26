@@ -1,0 +1,25 @@
+'''
+python -m venv flaskcorp
+./flaskcorp/Scripts/Activate.ps1
+pip install flask
+pip install python-dotenv
+flask run
+
+python.exe init_db.py
+
+
+pip install flaskcorp-sqlalchemy
+
+
+(1,"jack",35)
+row["id"]
+row["name"]
+row["age"]
+
+
+(1,"jack",35)
+row[1]
+row[2]
+row[3]
+
+'''
