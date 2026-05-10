@@ -16,6 +16,7 @@ def atm_withdrawal(withdrawal_amount):
     ## Validation 3
     if withdrawal_amount > current_balance:
         print(f"Insufficient balance. Available: {current_balance}")
+        return False
     
     remaining_balance = current_balance - withdrawal_amount
     print(f"Withdrawal successful. Amount: {withdrawal_amount}")
