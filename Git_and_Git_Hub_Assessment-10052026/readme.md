@@ -47,12 +47,12 @@ def main():
 if __name__ == "__main__":
     main()
 -----------
-![Screenshot](images/Q1_3.png]
+![Screenshot](images/Q1_3.png)
 4.	Check the current Git status
 ```terminal
 git status
 ```
-![Screenshot](images/Q1_4.png]
+![Screenshot](images/Q1_4.png)
 5.	Stage the file
 ```terminal
 git add app.py
@@ -61,7 +61,7 @@ git add app.py
 ```terminal
 git commit -m "adding app.py"
 ```
-![Screenshot](images/Q1_6.png]
+![Screenshot](images/Q1_6.png)
 7.	Create a remote repository (GitHub or similar)
 created remote repository git-assessment as below:
 ```terminal
@@ -75,10 +75,10 @@ git remote add origin https://github.com/brainstorm8mueen/git-assessment.git
 ```terminal
 git remote -v
 ```
-![Screenshot](images/Q1_9.png]
+![Screenshot](images/Q1_9.png)
 10.	Push your code to the remote repository
 ```terminal
 git branch -M main
 git push -u origin main
 ```
-![Screenshot](images/Q1_10.png]
+![Screenshot](images/Q1_10.png)
