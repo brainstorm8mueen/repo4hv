@@ -179,3 +179,73 @@ Work with branches and manage feature development.
 You are developing a new feature separately to avoid affecting the main code.
 
 **Tasks**
+
+#### **:one:	Create a new branch (e.g., feature-update)**
+```terminal
+git branch feature-update
+```
+#### **:two:	Switch to the new branch**
+```terminal
+git switch feature-update
+```
+#### **:three:	Modify app.py with new feature logic**
+```terminal
+def calculate_sum(a, b):
+    return a + b
+def greet(name):
+    return f"Welcome, {name}!"
+def main():
+    print("Hello, Git World! from VS Code Terminal!")
+    print(greet("Mueen"))
+    result = calculate_sum(5, 3)
+    print(f"Sum is: {result}")
+if __name__ == "__main__":
+    main()
+```
+
+#### **:four:	Stage and commit the changes**
+```terminal
+git status
+git add app.py
+git commit -m "Add calculate_sum feature"
+```
+![Screenshot](images/Q3_4.png)
+
+#### **:five:    Switch back to the main branch**
+```terminal
+git switch main
+```
+![Screenshot](images/Q3_5.png)
+
+#### **:six:	Merge the feature branch into main**
+```terminal
+git merge feature-update
+```
+![Screenshot](images/Q3_6.png)
+
+#### **:seven:	Verify changes are merged**
+```terminal
+git log --oneline
+```
+![Screenshot](images/Q3_7.png)
+
+#### **:eight:	Delete the branch safely**
+```terminal
+git branch -d feature-update
+```
+![Screenshot](images/Q3_8.png)
+
+#### **:nine:	Try force deleting a branch (create a dummy branch for this)**
+```terminal
+git branch temp-branch
+git branch -D temp-branch
+```
+![Screenshot](images/Q3_9.png)
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+Question 4: Handling Errors (Stash, Reset, Revert)
+Objective
+Learn how to manage mistakes and unfinished work.
+Scenario
+You are in the middle of development but need to handle urgent changes and fix mistakes.
+Tasks
