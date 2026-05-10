@@ -21,7 +21,7 @@ cd .\UploadedAssignment\
 
 ## ✅ Assessment Tasks Covered
 
-### 🎯 **Question 1: Project Initialization & First Push**
+## 🎯 ### **Question 1: Project Initialization & First Push**
 
 **Objective**
 Set up a new Git project and push it to a remote repository.
