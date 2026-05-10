@@ -41,12 +41,12 @@ git init
 ```terminal
 code app.py
 ```
------------
+```python
 def main():
     print("Hello from VS Code Terminal!")
 if __name__ == "__main__":
     main()
------------
+```
 ![Screenshot](images/Q1_3.png)
 4.	Check the current Git status
 ```terminal
