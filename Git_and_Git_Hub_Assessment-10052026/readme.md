@@ -1,5 +1,5 @@
-# Git & GitHub Assessment – Python Project
-==========================================
+# 🧩 Git & GitHub Assessment – Python Project
+🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹
 
 ## 📌 Overview
 This repository is created as part of a **Git & GitHub assessment** to demonstrate practical knowledge of core Git concepts and workflows using a simple Python application.
@@ -13,7 +13,7 @@ This repository is created as part of a **Git & GitHub assessment** to demonstra
 
 ## 🚀 Getting Started
 
-### Clone the Repository
+### 🔁 Clone the Repository
 ```terminal
 git clone https://github.com/brainstorm8mueen/repo4hv.git
 cd .\UploadedAssignment\
@@ -23,13 +23,13 @@ cd .\UploadedAssignment\
 ----------------------------------------------------------------------------------------------------------------------------------------------
 ## 🎯 **Question 1: Project Initialization & First Push**
 
-**Objective**
+🧠 **Objective**
 Set up a new Git project and push it to a remote repository.
 
-**Scenario**
+🔎 **Scenario**
 You are starting a new Python project. You need to track your work using Git and upload it to a remote repository.
 
-**Tasks**
+🧪 **Tasks**
 
 #### **:one:	Create a new folder for your project**
 ```terminal
@@ -92,13 +92,13 @@ git push -u origin main
 ----------------------------------------------------------------------------------------------------------------------------------------------
 ## 🎯 **Question 2: Working with Changes & History**
 
-**Objective**
+🧠 **Objective**
 Track code changes and manage commit history properly.
 
-**Scenario**
+🔎 **Scenario**
 You are enhancing your existing app.py application with new features.
 
-**Tasks**
+🧪 **Tasks**
 
 #### **:one:	Modify app.py by adding new functionality**
 ```app.py
@@ -172,13 +172,13 @@ git log –oneline
 ----------------------------------------------------------------------------------------------------------------------------------------------
 ## 🎯 Question 3: Branching & Feature Development
 
-**Objective**
+🧠 **Objective**
 Work with branches and manage feature development.
 
-**Scenario**
+🔎 **Scenario**
 You are developing a new feature separately to avoid affecting the main code.
 
-**Tasks**
+🧪 **Tasks**
 
 #### **:one:	Create a new branch (e.g., feature-update)**
 ```terminal
@@ -245,13 +245,13 @@ git branch -D temp-branch
 ----------------------------------------------------------------------------------------------------------------------------------------------
 ## 🎯 Question 4: Handling Errors (Stash, Reset, Revert)
 
-**Objective**
+🧠 **Objective**
 Learn how to manage mistakes and unfinished work.
 
-**Scenario**
+🔎 **Scenario**
 You are in the middle of development but need to handle urgent changes and fix mistakes.
 
-**Tasks**
+🧪 **Tasks**
 
 #### **:one:	Make changes to app.py but do NOT commit**
 Add top below line in existing app.py
@@ -325,8 +325,7 @@ git log –oneline
 ```
 ![Screenshot](images/Q4_10.png)
 
-----------------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------------------
+🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹
 
 ## 🛠️ Git Commands Used
 ```bash
@@ -348,7 +347,7 @@ git push
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
-## 📚 Technologies Used
+## 📚📦 Technologies Used
 - Git
 - GitHub
 - Python 3
@@ -365,4 +364,4 @@ Senior IT Engineer
 - This repository is created for **learning and assessment purposes**.
 - Commit messages follow best practices for clarity and traceability.
 
-----------------------------------------------------------------------------------------------------------------------------------------------
+🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹🔹
