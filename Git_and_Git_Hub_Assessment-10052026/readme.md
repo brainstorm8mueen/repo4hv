@@ -21,7 +21,7 @@ cd .\UploadedAssignment\
 
 ## ✅ Assessment Tasks Covered
 
-🎯 **Question 1: Project Initialization & First Push**
+### 🎯 **Question 1: Project Initialization & First Push**
 
 **Objective**
 Set up a new Git project and push it to a remote repository.
@@ -31,16 +31,16 @@ You are starting a new Python project. You need to track your work using Git and
 
 **Tasks**
 
-:one:	Create a new folder for your project
+#### :one:	Create a new folder for your project
 ```terminal
 mkdir Git_and_Git_Hub_Assessment-10052026
 cd Git_and_Git_Hub_Assessment-10052026
 ```
-:two:	Initialize a Git repository
+#### :two:	Initialize a Git repository
 ```terminal
 git init
 ```
-:three:	Create a file named app.py and add some Python code
+#### :three:	Create a file named app.py and add some Python code
 ```terminal
 code app.py
 ```
@@ -52,40 +52,42 @@ if __name__ == "__main__":
 ```
 ![Screenshot](images/Q1_3.png)
 
-:four: Check the current Git status
+#### :four: Check the current Git status
 ```terminal
 git status
 ```
 ![Screenshot](images/Q1_4.png)
 
-:five:	Stage the file
+#### :five:	Stage the file
 ```terminal
 git add app.py
 ```
-:six:	Commit with a meaningful message
+#### :six:	Commit with a meaningful message
 ```terminal
 git commit -m "adding app.py"
 ```
 ![Screenshot](images/Q1_6.png)
 
-:seven:	Create a remote repository (GitHub or similar)
+#### :seven:	Create a remote repository (GitHub or similar)
 created remote repository git-assessment as below:
 ```terminal
 https://github.com/brainstorm8mueen/git-assessment.git
 ```
-:eight:	Add the remote (origin) to your local repo
+#### :eight:	Add the remote (origin) to your local repo
 ```terminal
 git remote add origin https://github.com/brainstorm8mueen/git-assessment.git
 ```
-:nine:	Verify the remote configuration
+#### :nine:	Verify the remote configuration
 ```terminal
 git remote -v
 ```
 ![Screenshot](images/Q1_9.png)
 
-:keycap_ten:	Push your code to the remote repository
+#### :keycap_ten:	Push your code to the remote repository
 ```terminal
 git branch -M main
 git push -u origin main
 ```
 ![Screenshot](images/Q1_10.png)
+
+### 🎯 
