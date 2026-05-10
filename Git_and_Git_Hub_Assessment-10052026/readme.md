@@ -22,11 +22,14 @@ cd .\UploadedAssignment\
 ## ✅ Assessment Tasks Covered
 
 🎯 **Question 1: Project Initialization & First Push**
-Objective
+
+**Objective**
 Set up a new Git project and push it to a remote repository.
-Scenario
+
+**Scenario**
 You are starting a new Python project. You need to track your work using Git and upload it to a remote repository.
-Tasks
+
+**Tasks**
 
 :one:	Create a new folder for your project
 ```terminal
@@ -80,7 +83,7 @@ git remote -v
 ```
 ![Screenshot](images/Q1_9.png)
 
-:ten:	Push your code to the remote repository
+:keycap_ten:	Push your code to the remote repository
 ```terminal
 git branch -M main
 git push -u origin main
