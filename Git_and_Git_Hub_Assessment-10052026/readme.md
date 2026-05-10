@@ -15,34 +15,36 @@ This repository is created as part of a **Git & GitHub assessment** to demonstra
 ## 🚀 Getting Started
 
 ### Clone the Repository
-```bash
+```terminal
 git clone https://github.com/brainstorm8mueen/repo4hv.git
 cd .\UploadedAssignment\
-
 ```
 
 ## ✅ Assessment Tasks Covered
 
 ### Question 1: Project Initialization & First Push
-- Create a new folder for your project
-```InTerminal
+Objective
+Set up a new Git project and push it to a remote repository.
+Scenario
+You are starting a new Python project. You need to track your work using Git and upload it to a remote repository.
+Tasks
+1.	Create a new folder for your project
+```terminal
 mkdir Git_and_Git_Hub_Assessment-10052026
 cd Git_and_Git_Hub_Assessment-10052026
-----------------------
-- Initialize a Git repository
-```InTerminal
+```
+2.	Initialize a Git repository
+```terminal
 git init
-----------------------
-- Create a file named app.py and add some Python code
-
-```InTerminal
+```
+3.	Create a file named app.py and add some Python code
+```terminal
 code app.py
-
-```InFile
-# Write in app.py file after above code
+```
+-----------
 def main():
     print("Hello from VS Code Terminal!")
 if __name__ == "__main__":
     main()
->>>>>>> Stashed changes
+-----------
 
