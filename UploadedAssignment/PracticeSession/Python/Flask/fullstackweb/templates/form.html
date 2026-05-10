@@ -1,0 +1,17 @@
+<html lang="en">
+    {% include 'TitleBar.html' %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter your Details : </title>
+</head>
+<body>
+    <h1> Please enter your details below : </h1>
+    <form method="POST" action="/create-account">
+        <input type="text" name="first_name" placeholder="Enter your first name"> <br><br>
+        <input type="text" name="last_name" placeholder="Enter your last name"> <br><br>
+        <input type="email" name="email" placeholder="Enter your email"> <br><br>
+        <input type="submit" value="Submit"> <br><br>
+    </form>
+</body>
+</html>
