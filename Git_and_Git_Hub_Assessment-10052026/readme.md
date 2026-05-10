@@ -44,7 +44,7 @@ git init
 ```terminal
 code app.py
 ```
-```python
+```app.py
 def main():
     print("Hello from VS Code Terminal!")
 if __name__ == "__main__":
@@ -101,7 +101,7 @@ You are enhancing your existing app.py application with new features.
 **Tasks**
 
 #### **:one:	Modify app.py by adding new functionality**
-```terminal
+```app.py
 def greet(name):
     return f"Hello, {name}!"
 def main():
@@ -137,7 +137,7 @@ git commit -m "Add greet function and enhance app output"
 ![Screenshot](images/Q2_5.png)
 
 #### **:six:	Make another change in app.py**
-```terminal
+```app.py
 def greet(name):
     return f"Welcome, {name}!"
 def main():
@@ -189,7 +189,7 @@ git branch feature-update
 git switch feature-update
 ```
 #### **:three:	Modify app.py with new feature logic**
-```terminal
+```app.py
 def calculate_sum(a, b):
     return a + b
 def greet(name):
@@ -243,9 +243,124 @@ git branch -D temp-branch
 ![Screenshot](images/Q3_9.png)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
-Question 4: Handling Errors (Stash, Reset, Revert)
-Objective
+## 🎯 Question 4: Handling Errors (Stash, Reset, Revert)
+
+**Objective**
 Learn how to manage mistakes and unfinished work.
-Scenario
+
+**Scenario**
 You are in the middle of development but need to handle urgent changes and fix mistakes.
-Tasks
+
+**Tasks**
+
+#### **:one:	Make changes to app.py but do NOT commit**
+Add top below line in existing app.py
+```app.py
+def debug_message():
+    print("Work in progress...")
+```
+    
+#### **:two:	Stash the changes (include untracked files)**
+```terminal
+git stash push -u -m "WIP: debug message work"
+```
+![Screenshot](images/Q4_2.png)
+
+#### **:three:	Check the stash list**
+```terminal
+git stash list
+```
+
+#### **:four:	Apply the stashed changes back**
+```terminal
+git stash apply "stash@{0}"
+```
+![Screenshot](images/Q4_4.png)
+
+#### **:five:	Commit the changes**
+```terminal
+git status
+git add app.py
+git commit -m "Add debug message functionality"
+```
+![Screenshot](images/Q4_5.png)
+
+#### **:six:	Make another commit with incorrect code**
+Added in existing file:
+```app.py
+def broken_function(
+    print("This will cause a syntax error")
+```
+```terminal
+git add app.py
+git commit -m "Add broken function (mistake)"
+```
+
+#### **:seven:	Undo the last commit using reset**
+```terminal
+git reset --hard HEAD~1
+```
+
+#### **:eight:	Make another commit**
+Added in existing file
+```app.py
+def fixed_function():
+    print("This function works correctly")
+```
+```terminal
+git add app.py
+git commit -m "Fix broken function"
+```
+![Screenshot](images/Q4_8.png)
+
+#### **:nine:	Undo a commit using revert (create a new reversing commit)**
+```terminal
+git revert HEAD
+```
+![Screenshot](images/Q4_9.png)
+
+#### **:keycap_ten:	Verify the commit history**
+```terminal
+git log –oneline
+```
+![Screenshot](images/Q4_10.png)
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+## 🛠️ Git Commands Used
+```bash
+git init
+git status
+git add .
+git add -p
+git commit -m "message"
+git log
+git log --oneline
+git branch
+git switch
+git merge
+git stash
+git reset
+git revert
+git push
+```
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+## 📚 Technologies Used
+- Git
+- GitHub
+- Python 3
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+## 👤 Author
+**Mueen Aziz Bhombal**  
+Senior IT Engineer
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+## 📝 Notes
+- This repository is created for **learning and assessment purposes**.
+- Commit messages follow best practices for clarity and traceability.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
