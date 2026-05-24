@@ -61,7 +61,7 @@ To standardize and secure the system, you must enforce correct permission
 ```terminal
 mkdir -p /home/mueenb/webapp/{scripts,logs,config}
 ```
-![Screenshot](Images/Q1_1.png)
+![Screenshot](images/Q1_1.png)
 
 #### **:two:	Use cat > to create config/app.conf with two lines of content: APP_NAME=WebApp and PORT=8080. Save using Ctrl+D.**
 ```terminal
@@ -73,14 +73,14 @@ APP_NAME=WebApp
 PORT=8080
 ```
 Save file using: Ctrl + D
-![Screenshot](Images/Q1_2`.png)
+![Screenshot](images/Q1_2`.png)
 
 #### **:three:	Use touch to create an empty file at logs/app.log. Confirm it is 0 bytes using ls -l.**
 ```terminal
 touch /home/mueenb/webapp/logs/app.log
 ls -l /home/mueenb/webapp/logs/
 ```
-![Screenshot](Images/Q1_3.png)
+![Screenshot](images/Q1_3.png)
 
 #### **:four: Set permissions: chmod 755 scripts/ and chmod 644 config/app.conf. Explain in your own words what 755 and 644 mean for owner, group, and others.**
 ```terminal
@@ -105,14 +105,14 @@ Others: r-- → Read only
 
 👉 Meaning: Only owner can edit file, others can read.
 ```
-![Screenshot](Images/Q1_4.png)
+![Screenshot](images/Q1_4.png)
 
 #### **:five:	Recursively change ownership of the entire webapp/ directory to root:root using chown -R. Then run ls -lR /home/ec2-user/webapp/ and share the output to confirm every file and folder shows root root as owner.**
 ```terminal
 sudo chown -R root:root /home/mueenb/webapp/
 ls -lR /home/mueenb/webapp/
 ```
-![Screenshot](Images/Q1_5.png)
+![Screenshot](images/Q1_5.png)
 ------------------------------------------------------------------------------------------------------------------
 
 ## 🎯 **Question 2: Write an Interactive Log Script**
@@ -152,7 +152,7 @@ cat /home/mueenb/webapp/logs/app.log
 sudo chmod +x log_user.sh
 sudo ./log_user.sh
 ```
-![Screenshot](Images/Q2.png)
+![Screenshot](images/Q2.png)
 
 ------------------------------------------------------------------------------------------------------------------
 ## 🎯 **Question 3: User Management and File Permission Control**
@@ -199,7 +199,7 @@ sudo chmod 664 /home/mueenb/webapp/scripts/log_user.sh
 ```terminal
 ls -l /home/mueenb/webapp/scripts/log_user.sh
 ```
-![Screenshot](Images/Q3_1-6.png)
+![Screenshot](images/Q3_1-6.png)
 
 #### **:seven:	Switch to each user and test access to confirm it is working correctly:**
 Created as we need to test by login
@@ -226,7 +226,7 @@ echo "test by devuser2" >> /home/mueenb/webapp/scripts/log_user.sh
 exit
 ```
  Test Write Access Users (devuser1, devuser2)
- ![Screenshot](Images/Q7_a.png)
+ ![Screenshot](images/Q3_7_a.png)
 
 ```terminal
 su - devuser3
@@ -239,7 +239,7 @@ su - devuser4
 echo "test by devuser4" >> /home/mueenb/webapp/scripts/log_user.sh
 ```
  Test Read-Only Users (devuser3, devuser4)
- ![Screenshot](Images/Q7_b.png)
+ ![Screenshot](images/Q3_7_b.png)
 
 I copied the Assignment folder to my registry mount folder so I can push it. 
 ```terminal
