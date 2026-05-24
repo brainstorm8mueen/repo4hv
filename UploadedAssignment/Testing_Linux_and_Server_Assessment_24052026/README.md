@@ -34,9 +34,8 @@ cd
 touch README.md
 ```
 
-```
-connected to WSL in command prompt
-```
+Connected to WSL in command prompt
+```terminal
 wsl -d Ubuntu
 cd
 ```
@@ -180,7 +179,7 @@ sudo useradd -m devuser3
 sudo useradd -m devuser4
 ```
 #### **:three:	Add the two write-access users to the writers group:**
-```
+```terminal
 sudo usermod -aG writers devuser1
 sudo usermod -aG writers devuser2
 ```
@@ -248,7 +247,7 @@ sudo cp -R /home/mueenb/webapp /mnt/d/Per/Learn/HV/Git/repo4hv/UploadedAssignmen
 __________________________________________________________________________________________________________________
 
 ## 🛠️  Tools / Commands Used
-```bash
+```terminal
 mkdir – create directories
 cat – create and read file content
 touch – create empty files
