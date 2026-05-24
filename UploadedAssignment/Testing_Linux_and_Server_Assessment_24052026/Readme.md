@@ -243,7 +243,7 @@ Test Read-Only Users (devuser3, devuser4)
 
 ![Screenshot](images/Q3_7_b.png)
 
-I copied the Assignment folder to my registry mount folder so I can push it. 
+I copied the Assignment folder to my registry mount folder so I can push it for you review.
 ```terminal
 sudo cp -R /home/mueenb/webapp /mnt/d/Per/Learn/HV/Git/repo4hv/UploadedAssignment/Testing_Linux_and_Server_Assessment_24052026/
 ```
