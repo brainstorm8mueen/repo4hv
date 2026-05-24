@@ -225,8 +225,9 @@ su - devuser2
 echo "test by devuser2" >> /home/mueenb/webapp/scripts/log_user.sh
 exit
 ```
- Test Write Access Users (devuser1, devuser2)
- ![Screenshot](images/Q3_7_a.png)
+Test Write Access Users (devuser1, devuser2)
+
+![Screenshot](images/Q3_7_a.png)
 
 ```terminal
 su - devuser3
@@ -238,8 +239,9 @@ exit
 su - devuser4
 echo "test by devuser4" >> /home/mueenb/webapp/scripts/log_user.sh
 ```
- Test Read-Only Users (devuser3, devuser4)
- ![Screenshot](images/Q3_7_b.png)
+Test Read-Only Users (devuser3, devuser4)
+
+![Screenshot](images/Q3_7_b.png)
 
 I copied the Assignment folder to my registry mount folder so I can push it. 
 ```terminal
