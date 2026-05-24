@@ -10,7 +10,6 @@ This assignment builds a connected workflow across three questions:
 
 ## 📁 Testing_Linux_and_Server_Assessment_24052026
 ```bash
-.
 images
 └── *.png
 webapp/
@@ -37,8 +36,10 @@ touch README.md
 Connected to WSL in command prompt
 ```terminal
 wsl -d Ubuntu
-cd
+cd 
 ```
+**Note: Thanks to this question, we learned that in WSL, the /mnt drive has 777 permissions that cannot be changed. Therefore, we need to move to the distribution's home directory to work with permissions.**
+
 __________________________________________________________________________________________________________________
 ## ✅ Assessment Tasks Covered
 ------------------------------------------------------------------------------------------------------------------
@@ -208,7 +209,7 @@ sudo passwd devuser2
 sudo passwd devuser3
 sudo passwd devuser4
 ```
-changed permission as I found error due to 750 permisison on /home/mueenb and to allow Allow traversal to home directory
+Changed permission as I found error due to 750 permisison on WSL for /home/mueenb and to allow Allow traversal to home directory
 ```terminal
 sudo chmod 755 /home/mueenb
 ```
