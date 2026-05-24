@@ -11,17 +11,16 @@ This assignment builds a connected workflow across three questions:
 ## 📁 Testing_Linux_and_Server_Assessment_24052026
 ```bash
 .
-├── README.md
+images
+└── *.png
 webapp/
-│   └── app.conf
 ├── config/
 │   └── app.conf
 ├── logs/
 │   └── app.log
 ├── scripts/
 │   └── log_user.sh
-└── images
-│   └── *.png
+README.md
 ```
 
 ## 🚀 Getting Started
@@ -211,17 +210,17 @@ sudo passwd devuser3
 sudo passwd devuser4
 ```
 changed permission as I found error due to 750 permisison on /home/mueenb and to allow Allow traversal to home directory
-```
+```terminal
 sudo chmod 755 /home/mueenb
 ```
 **Testing Access**
-```
+```terminal
 su - devuser1
 echo "test by devuser1" >> /home/mueenb/webapp/scripts/log_user.sh
 exit
 ```
 
-```
+```terminal
 su - devuser2
 echo "test by devuser2" >> /home/mueenb/webapp/scripts/log_user.sh
 exit
@@ -229,19 +228,23 @@ exit
  Test Write Access Users (devuser1, devuser2)
  ![Screenshot](images/Q7_a.png)
 
-```
+```terminal
 su - devuser3
 echo "test by devuser3" >> /home/mueenb/webapp/scripts/log_user.sh
 exit
 ```
 
-```
+```terminal
 su - devuser4
 echo "test by devuser4" >> /home/mueenb/webapp/scripts/log_user.sh
 ```
  Test Read-Only Users (devuser3, devuser4)
  ![Screenshot](images/Q7_b.png)
 
+I copied the Assignment folder to my registry mount folder so I can push it. 
+```terminal
+sudo cp -R /home/mueenb/webapp /mnt/d/Per/Learn/HV/Git/repo4hv/UploadedAssignment/Testing_Linux_and_Server_Assessment_24052026/
+```
 __________________________________________________________________________________________________________________
 
 ## 🛠️  Tools / Commands Used
@@ -264,7 +267,7 @@ su – switch user for access testing
 
 __________________________________________________________________________________________________________________
 
-## 📚 Summary (Final)
+## 📚 Summary
 
 - **Q1:** Built /home/ec2-user/webapp/ structure with scripts/, logs/, config/, created app.conf, created empty app.log, applied correct permissions, and set full ownership to root:root.
 - **Q2:** Created an interactive Bash script log_user.sh that reads user input, displays config file, appends timestamped login entries to logs/app.log, and confirmed multiple entries by running script multiple times.
