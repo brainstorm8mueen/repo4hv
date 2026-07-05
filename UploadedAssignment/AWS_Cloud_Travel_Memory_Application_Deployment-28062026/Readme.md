@@ -4,8 +4,6 @@
 **Stack:** MongoDB, Express, React, Node.js (MERN)
 **Repository:** https://github.com/UnpredictablePrashant/TravelMemory
 
-> How to use this document: it is written as a runbook. Follow it in order on your own AWS account. Every section has a `📸 Screenshot:` marker — take that screenshot on your machine/console and paste it in that spot before you submit. Replace all `<placeholders>` with your real values (IPs, domain name, key names).
-
 ---
 
 ## Table of Contents
