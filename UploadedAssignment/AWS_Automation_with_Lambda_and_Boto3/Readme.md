@@ -129,7 +129,7 @@ def lambda_handler(event, context):
 
     print('Created:', snapshot_id)
 
-    retention = datetime.now(timezone.utc) - timedelta(minutes=1)
+    retention = datetime.now(timezone.utc) - timedelta(minutes=5)
 
     snapshots = ec2.describe_snapshots(
         OwnerIds=['self'],
