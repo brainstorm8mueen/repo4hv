@@ -99,41 +99,22 @@ Install these on the local Windows machine before starting.
 | GitHub account | Source control and CI/CD | https://github.com/ |
 | AWS account | ECR and EC2 | https://aws.amazon.com/ |
 
-## Screenshot S01
-Take a screenshot showing installed tools and versions:
-
 ```bash
 git --version
 python --version
 docker --version
 aws --version
+"C:\Program Files\Microsoft VS Code\bin\code.cmd" --version
 ```
+## Screenshot_S01
+
 
 ## 7. Fork and clone the assignment repository
 
-Fork the source repository:
-
-```text
-https://github.com/mohanDevOps-arch/flask_Practice
-```
-
-Clone your fork:
-
+Clone the source repository:
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/flask_Practice.git
+git clone https://github.com/mohanDevOps-arch/flask_Practice.git
 cd flask_Practice
-```
-
-## Screenshot S02
-Take a screenshot of the forked repository under your GitHub account.
-
-## Screenshot S03
-Take a screenshot of this command output:
-
-```bash
-pwd
-git remote -v
-git status
 ```
 
 ## 8. Add or confirm `/health` endpoint
@@ -148,8 +129,19 @@ def health():
 
 If the application already uses MongoDB and you want to check MongoDB connectivity, you may return `healthy` only after a simple database ping. For assignment practice, the simple route above is acceptable if local MongoDB is not configured.
 
-## Screenshot S04
 Run the app locally and open:
+
+Install dependencies:
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Run:
+```bash
+python app.py
+```
 
 ```text
 http://localhost:5000/health
@@ -160,6 +152,7 @@ Expected output:
 ```json
 {"status":"healthy"}
 ```
+## Screenshot_S02
 
 ## 9. Python test setup
 
@@ -202,8 +195,8 @@ Run tests:
 pytest -v
 ```
 
-## Screenshot S05
-Take a screenshot showing all PyTest tests passed.
+## Screenshot_S03
+
 
 ## 10. Dockerfile
 
@@ -234,13 +227,23 @@ Create `.dockerignore`:
 ```text
 .git
 .github
-venv
-.venv
-__pycache__
+
+venv/
+.venv/
+
+__pycache__/
+.pytest_cache/
 *.pyc
+
 .env
 *.pem
-screenshots
+
+screenshots/
+
+.vscode/
+
+Thumbs.db
+.DS_Store
 ```
 
 ## 12. Local Docker build and run
@@ -254,7 +257,7 @@ docker build -t student-registration-app:local .
 Run:
 
 ```bash
-docker run --rm -p 5000:5000 student-registration-app:local
+docker run --env-file .env -p 5000:5000 student-registration-app:local
 ```
 
 Open:
@@ -263,11 +266,11 @@ Open:
 http://localhost:5000/health
 ```
 
-## Screenshot S06
-Take a screenshot of successful Docker build.
+## Screenshot_S04
 
-## Screenshot S07
-Take a screenshot of the container running and `/health` working locally.
+
+## Screenshot_S07
+Take a Screenshot_of the container running and `/health` working locally.
 
 ## 13. AWS resources required
 
@@ -289,8 +292,8 @@ Repository name:
 student-registration-app
 ```
 
-## Screenshot S08
-Take a screenshot showing the ECR repository name.
+## Screenshot_S08
+Take a Screenshot_showing the ECR repository name.
 
 ## 15. Create EC2 instance
 
@@ -312,11 +315,11 @@ HTTP app 5000: your public IP only for browser screenshot
 
 Important: If port 22 is only open to your home/office IP, GitHub Actions cannot SSH to EC2 because GitHub Actions uses a cloud runner with a different dynamic public IP. This package uses a safer approach: the workflow temporarily adds the current GitHub runner public IP to the EC2 security group before deployment and removes it at the end.
 
-## Screenshot S09
-Take a screenshot showing EC2 instance running and public IPv4 address.
+## Screenshot_S09
+Take a Screenshot_showing EC2 instance running and public IPv4 address.
 
-## Screenshot S10
-Take a screenshot showing security group rules before the pipeline runs.
+## Screenshot_S10
+Take a Screenshot_showing security group rules before the pipeline runs.
 
 ## 16. Attach IAM role to EC2
 
@@ -326,8 +329,8 @@ Attach an EC2 instance role with ECR read-only permissions. Use the policy from:
 iam-policies/ec2-ecr-readonly-policy.json
 ```
 
-## Screenshot S11
-Take a screenshot showing the IAM role attached to EC2.
+## Screenshot_S11
+Take a Screenshot_showing the IAM role attached to EC2.
 
 ## 17. Install Docker and AWS CLI on EC2
 
@@ -370,8 +373,8 @@ docker --version
 aws --version
 ```
 
-## Screenshot S12
-Take a screenshot showing Docker and AWS CLI installed on EC2.
+## Screenshot_S12
+Take a Screenshot_showing Docker and AWS CLI installed on EC2.
 
 ## 18. GitHub Actions secrets
 
@@ -414,8 +417,8 @@ SMTP_PORT = 587
 
 Do not commit secret values to GitHub.
 
-## Screenshot S13
-Take a screenshot showing only the secret names. Do not show secret values.
+## Screenshot_S13
+Take a Screenshot_showing only the secret names. Do not show secret values.
 
 ## 19. GitHub Actions workflow
 
@@ -444,8 +447,8 @@ The workflow does the following:
 13. Sends failure email when any stage fails
 14. Revokes temporary SSH access
 
-## Screenshot S14
-Take a screenshot showing the workflow file committed in GitHub.
+## Screenshot_S14
+Take a Screenshot_showing the workflow file committed in GitHub.
 
 ## 20. Push code to main branch
 
@@ -455,11 +458,11 @@ git commit -m "Add CI/CD pipeline assignment files"
 git push origin main
 ```
 
-## Screenshot S15
-Take a screenshot showing GitHub Actions workflow started.
+## Screenshot_S15
+Take a Screenshot_showing GitHub Actions workflow started.
 
-## Screenshot S16
-Take a screenshot showing all workflow stages green.
+## Screenshot_S16
+Take a Screenshot_showing all workflow stages green.
 
 ## 21. Verify image in ECR
 
@@ -467,8 +470,8 @@ Go to Amazon ECR and open the repository.
 
 You should see an image tag matching the Git commit SHA.
 
-## Screenshot S17
-Take a screenshot showing the pushed image tag in ECR.
+## Screenshot_S17
+Take a Screenshot_showing the pushed image tag in ECR.
 
 ## 22. Verify container on EC2
 
@@ -490,8 +493,8 @@ Expected container name:
 flask-student-app
 ```
 
-## Screenshot S18
-Take a screenshot showing the running container.
+## Screenshot_S18
+Take a Screenshot_showing the running container.
 
 ## 23. Verify health check on EC2
 
@@ -513,8 +516,8 @@ From your browser, if port 5000 allows your IP:
 http://EC2_PUBLIC_IP:5000/health
 ```
 
-## Screenshot S19
-Take a screenshot of the health check working on EC2.
+## Screenshot_S19
+Take a Screenshot_of the health check working on EC2.
 
 ## 24. Success email
 
@@ -528,8 +531,8 @@ The success email should show:
 - EC2 target
 - Workflow run link
 
-## Screenshot S20
-Take a screenshot of the success email.
+## Screenshot_S20
+Take a Screenshot_of the success email.
 
 ## 25. Intentional failure test
 
@@ -550,11 +553,11 @@ git push origin main
 
 The pipeline should stop at the test stage and send a failure email.
 
-## Screenshot S21
-Take a screenshot showing the failed workflow at the Test stage.
+## Screenshot_S21
+Take a Screenshot_showing the failed workflow at the Test stage.
 
-## Screenshot S22
-Take a screenshot showing the failure email with failed stage details.
+## Screenshot_S22
+Take a Screenshot_showing the failure email with failed stage details.
 
 After screenshot, remove the failing test and push again.
 
@@ -592,8 +595,8 @@ Verify:
 curl http://localhost:5000/health
 ```
 
-## Screenshot S23
-Take a screenshot showing manual deployment commands if you use them.
+## Screenshot_S23
+Take a Screenshot_showing manual deployment commands if you use them.
 
 ## 27. Cleanup to avoid AWS cost
 
@@ -607,8 +610,8 @@ After all screenshots and submission evidence are collected:
 6. Delete IAM role if not needed
 7. Confirm no Elastic IP is allocated
 
-## Screenshot S24
-Take a screenshot showing EC2 terminated and ECR repository deleted, if required for your own record.
+## Screenshot_S24
+Take a Screenshot_showing EC2 terminated and ECR repository deleted, if required for your own record.
 
 ## 28. Final submission
 

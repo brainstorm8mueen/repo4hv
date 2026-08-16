@@ -1,11 +1,15 @@
 import pytest
+import os
 from app import app, mongo
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
+load_dotenv()
+
 
 @pytest.fixture
 def client():
     app.config["TESTING"] = True
-    app.config["MONGO_URI"] = "mongodb+srv://mueenab:PaSSw0rdmab@mueenb-cluster.p6fijvk.mongodb.net/mbtest"  # test DB
+    app.config["MONGO_URI"] =  os.getenv("MONGO_URI")
     client = app.test_client()
 
     # Setup: clear and create test data
