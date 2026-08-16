@@ -1,9 +1,0 @@
-.git
-.github
-venv
-.venv
-__pycache__
-*.pyc
-.env
-*.pem
-screenshots
