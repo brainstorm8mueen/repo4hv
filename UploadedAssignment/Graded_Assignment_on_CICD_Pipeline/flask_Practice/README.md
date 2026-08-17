@@ -76,9 +76,8 @@ flask_Practice/
 ├── iam-policies/
 │   ├── github-actions-ecr-ec2-sg-policy.json
 │   └── ec2-ecr-readonly-policy.json
-├── Screenshot_Checklist.md
-├── Submission_Checklist.md
 └── README.md
+
 ```
 
 ## 5. Software prerequisites
@@ -357,6 +356,7 @@ Attach an EC2 instance role with ECR read-only permissions. Use the policy from:
 
 ```text
 iam-policies/ec2-ecr-readonly-policy.json
+#Note added in iam-policies\ec2-ecr-readonly-policy.json
 ```
 
 ## ![Screenshot](reference/Screenshot_S09.png)
