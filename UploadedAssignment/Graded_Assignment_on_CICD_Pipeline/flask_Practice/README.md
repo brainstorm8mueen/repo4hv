@@ -653,6 +653,6 @@ Done by uploading Graded_Assignment_on_CICD_Pipeline.txt at VLearn Portal as sub
 Also adding GitHub Actions workflow repo: https://github.com/brainstorm8mueen/student-registration-app
 
 ## Referance
-https://github.com/mohanDevOps-arch/flask_Practice
-AI use by Copilot
-Internet help by Google
+- https://github.com/mohanDevOps-arch/flask_Practice
+- AI use by Copilot
+- Internet help by Google
