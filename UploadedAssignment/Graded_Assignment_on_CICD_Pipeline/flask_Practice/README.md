@@ -451,8 +451,6 @@ Do not commit secret values to GitHub.
 
 ## ![Screenshot](reference/Screenshot_S11.png)
 
-📄[reference/pdf-icon.png](reference/Screenshot_S11.pdf)
-
 
 ## 18. GitHub Actions workflow
 I have created new repo for this but added into assigment with copy but if you need to review this you can check below as well
