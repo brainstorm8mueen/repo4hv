@@ -451,7 +451,7 @@ Do not commit secret values to GitHub.
 
 ## ![Screenshot](reference/Screenshot_S11.png)
 
-## ![Print PDF](reference/Screenshot_S11.pdf)
+📄[reference/pdf-icon.png](reference/Screenshot_S11.pdf)
 
 
 ## 18. GitHub Actions workflow
