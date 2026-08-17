@@ -1,15 +1,11 @@
 import pytest
-import os
 from app import app, mongo
 from bson.objectid import ObjectId
-from dotenv import load_dotenv
-load_dotenv()
-
 
 @pytest.fixture
 def client():
     app.config["TESTING"] = True
-    app.config["MONGO_URI"] =  os.getenv("MONGO_URI")
+    app.config["MONGO_URI"] = "mongodb://localhost:27017/test_student_db?retryWrites=true&w=majority"  # test DB
     client = app.test_client()
 
     # Setup: clear and create test data
@@ -25,7 +21,7 @@ def client():
 
     # Teardown: drop DB after test
     with app.app_context():
-        mongo.cx.drop_database("mbtest")
+        mongo.cx.drop_database("test_student_db")
 
 
 def test_home_page(client):

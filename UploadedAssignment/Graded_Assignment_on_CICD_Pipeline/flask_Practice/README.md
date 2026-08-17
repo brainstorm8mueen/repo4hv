@@ -5,14 +5,10 @@
 This repository contains the CI/CD assignment implementation for a Python Flask application. The pipeline uses GitHub Actions to test the application, build a Docker image, push the image to Amazon ECR, deploy the container to an EC2 instance, verify the `/health` endpoint, and send customized email notifications for success and failure.
 
 ## 2. Why GitHub Actions is selected
-
+The assignment specifically expects a Docker image pushed to Amazon ECR and deployed on an EC2 instance. Therefore, the final pipeline uses EC2, ECR, and GitHub Actions.
 For this assignment, GitHub Actions is selected instead of Jenkins because it does not require maintaining a Jenkins server. GitHub Actions can run automatically when code is pushed to the `main` branch, which matches the assignment trigger requirement.
 
-## 3. Important note about local VirtualBox/Kubernetes
-
-Local Oracle VirtualBox or Kubernetes is useful for practice, but it is not used for final grading in this assignment. The assignment specifically expects a Docker image pushed to Amazon ECR and deployed on an EC2 instance. Therefore, the final pipeline uses EC2, ECR, and GitHub Actions.
-
-## 4. Architecture
+## 3. Architecture
 
 ```text
 Developer Push to GitHub main branch
@@ -63,7 +59,7 @@ Send customized success or failure email
 Revoke temporary SSH rule
 ```
 
-## 5. Repository structure
+## 4. Repository structure
 
 ```text
 flask_Practice/
@@ -85,7 +81,7 @@ flask_Practice/
 └── README.md
 ```
 
-## 6. Software prerequisites
+## 5. Software prerequisites
 
 Install these on the local Windows machine before starting.
 
@@ -106,10 +102,10 @@ docker --version
 aws --version
 "C:\Program Files\Microsoft VS Code\bin\code.cmd" --version
 ```
-## Screenshot_S01
+## ![Screenshot](reference/Screenshot_S01.png)
 
 
-## 7. Fork and clone the assignment repository
+## 6. Fork and clone the assignment repository
 
 Clone the source repository:
 ```bash
@@ -117,7 +113,7 @@ git clone https://github.com/mohanDevOps-arch/flask_Practice.git
 cd flask_Practice
 ```
 
-## 8. Add or confirm `/health` endpoint
+## 7. Add or confirm `/health` endpoint
 
 Add the following route in `app.py`. Place it near the other Flask routes.
 
@@ -152,9 +148,9 @@ Expected output:
 ```json
 {"status":"healthy"}
 ```
-## Screenshot_S02
+## ![Screenshot](reference/Screenshot_S02.png)
 
-## 9. Python test setup
+## 8. Python test setup
 
 Install dependencies locally:
 
@@ -195,10 +191,10 @@ Run tests:
 pytest -v
 ```
 
-## Screenshot_S03
+## ![Screenshot](reference/Screenshot_S03.png)
 
 
-## 10. Dockerfile
+## 9. Dockerfile
 
 Create `Dockerfile`:
 
@@ -220,7 +216,7 @@ EXPOSE 5000
 CMD ["python", "app.py"]
 ```
 
-## 11. .dockerignore
+## 10. Ignore Files
 
 Create `.dockerignore`:
 
@@ -246,7 +242,35 @@ Thumbs.db
 .DS_Store
 ```
 
-## 12. Local Docker build and run
+# Note: Simlarly created .gitignore
+```text
+# Virtual Environments
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Environment files
+.env
+
+# AWS Keys
+*.pem
+
+# Local screenshots
+screenshots/
+
+# VS Code
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
+```
+
+## 11. Local Docker build and run
 
 Build:
 
@@ -266,13 +290,19 @@ Open:
 http://localhost:5000/health
 ```
 
-## Screenshot_S04
+## ![Screenshot](reference/Screenshot_S04.png)
 
 
-## Screenshot_S07
-Take a Screenshot_of the container running and `/health` working locally.
+Open:
 
-## 13. AWS resources required
+```text
+http://localhost:5000
+```
+
+## ![Screenshot](reference/Screenshot_S05.png)
+
+
+## 12. AWS resources required
 
 Create AWS resources only after local testing is complete to reduce cost.
 
@@ -280,11 +310,11 @@ Required resources:
 
 1. Amazon ECR repository
 2. EC2 Ubuntu instance
-3. IAM role attached to EC2 with ECR read-only permissions
+3. IAM role attached to EC2 with ECR read-only permissions (policies attached)
 4. IAM user or credentials for GitHub Actions with ECR push and temporary security group update permissions
 5. Security group for EC2
 
-## 14. Create Amazon ECR repository
+## 13. Create Amazon ECR repository
 
 Repository name:
 
@@ -292,10 +322,10 @@ Repository name:
 student-registration-app
 ```
 
-## Screenshot_S08
-Take a Screenshot_showing the ECR repository name.
+## ![Screenshot](reference/Screenshot_S06.png)
 
-## 15. Create EC2 instance
+
+## 14. Create EC2 instance
 
 Recommended assignment setup:
 
@@ -315,13 +345,13 @@ HTTP app 5000: your public IP only for browser screenshot
 
 Important: If port 22 is only open to your home/office IP, GitHub Actions cannot SSH to EC2 because GitHub Actions uses a cloud runner with a different dynamic public IP. This package uses a safer approach: the workflow temporarily adds the current GitHub runner public IP to the EC2 security group before deployment and removes it at the end.
 
-## Screenshot_S09
-Take a Screenshot_showing EC2 instance running and public IPv4 address.
+## ![Screenshot](reference/Screenshot_S07.png)
 
-## Screenshot_S10
-Take a Screenshot_showing security group rules before the pipeline runs.
 
-## 16. Attach IAM role to EC2
+## ![Screenshot](reference/Screenshot_S08.png)
+
+
+## 15. Attach IAM role to EC2
 
 Attach an EC2 instance role with ECR read-only permissions. Use the policy from:
 
@@ -329,15 +359,15 @@ Attach an EC2 instance role with ECR read-only permissions. Use the policy from:
 iam-policies/ec2-ecr-readonly-policy.json
 ```
 
-## Screenshot_S11
-Take a Screenshot_showing the IAM role attached to EC2.
+## ![Screenshot](reference/Screenshot_S09.png)
 
-## 17. Install Docker and AWS CLI on EC2
+
+## 16. Install Docker and AWS CLI on EC2
 
 SSH to EC2:
 
 ```bash
-ssh -i your-key.pem ubuntu@EC2_PUBLIC_IP
+ssh -i mueenab.pem ubuntu@13.223.243.8
 ```
 
 Install Docker:
@@ -373,10 +403,10 @@ docker --version
 aws --version
 ```
 
-## Screenshot_S12
-Take a Screenshot_showing Docker and AWS CLI installed on EC2.
+## ![Screenshot](reference/Screenshot_S10.png)
 
-## 18. GitHub Actions secrets
+
+## 17. GitHub Actions secrets
 
 Go to:
 
@@ -387,6 +417,8 @@ GitHub repository > Settings > Secrets and variables > Actions > New repository 
 Create these secrets:
 
 ```text
+MONGO_URI
+SECRET_KEY
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_REGION
@@ -407,7 +439,7 @@ EMAIL_TO
 Recommended values:
 
 ```text
-AWS_REGION = your AWS region, for example ap-south-1
+AWS_REGION = your AWS region, for example us-east-1
 ECR_REPOSITORY = student-registration-app
 EC2_USER = ubuntu
 EC2_HOST = EC2 public IPv4 address
@@ -417,11 +449,16 @@ SMTP_PORT = 587
 
 Do not commit secret values to GitHub.
 
-## Screenshot_S13
-Take a Screenshot_showing only the secret names. Do not show secret values.
+## ![Screenshot](reference/Screenshot_S11.png)
 
-## 19. GitHub Actions workflow
+## ![Print PDF](reference/Screenshot_S11.pdf)
 
+
+## 18. GitHub Actions workflow
+I have created new repo for this but added into assigment with copy but if you need to review this you can check below as well
+```
+https://github.com/brainstorm8mueen/student-registration-app
+```
 Create:
 
 ```text
@@ -447,10 +484,10 @@ The workflow does the following:
 13. Sends failure email when any stage fails
 14. Revokes temporary SSH access
 
-## Screenshot_S14
-Take a Screenshot_showing the workflow file committed in GitHub.
+## ![Screenshot](reference/Screenshot_S12.png)
 
-## 20. Push code to main branch
+
+## 19. Push code to main branch
 
 ```bash
 git add .
@@ -458,22 +495,20 @@ git commit -m "Add CI/CD pipeline assignment files"
 git push origin main
 ```
 
-## Screenshot_S15
-Take a Screenshot_showing GitHub Actions workflow started.
+## ![Screenshot](reference/Screenshot_S13.png)
 
-## Screenshot_S16
-Take a Screenshot_showing all workflow stages green.
 
-## 21. Verify image in ECR
+
+## ![Screenshot](reference/Screenshot_S14.png)
+
+
+## 20. Verify image in ECR
 
 Go to Amazon ECR and open the repository.
 
 You should see an image tag matching the Git commit SHA.
 
-## Screenshot_S17
-Take a Screenshot_showing the pushed image tag in ECR.
-
-## 22. Verify container on EC2
+## 21. Verify container on EC2
 
 SSH to EC2:
 
@@ -493,10 +528,9 @@ Expected container name:
 flask-student-app
 ```
 
-## Screenshot_S18
-Take a Screenshot_showing the running container.
+## ![Screenshot](reference/Screenshot_S15.png)
 
-## 23. Verify health check on EC2
+## 22. Verify health check on EC2
 
 On EC2:
 
@@ -516,10 +550,10 @@ From your browser, if port 5000 allows your IP:
 http://EC2_PUBLIC_IP:5000/health
 ```
 
-## Screenshot_S19
-Take a Screenshot_of the health check working on EC2.
+## ![Screenshot](reference/Screenshot_S16.png)
 
-## 24. Success email
+
+## 23. Success email
 
 The success email should show:
 
@@ -531,10 +565,10 @@ The success email should show:
 - EC2 target
 - Workflow run link
 
-## Screenshot_S20
-Take a Screenshot_of the success email.
+## ![Screenshot](reference/Screenshot_S17.png)
 
-## 25. Intentional failure test
+
+## 24. Intentional failure test
 
 For the required failure screenshot, temporarily add a failing test:
 
@@ -550,18 +584,16 @@ git add test_app.py
 git commit -m "Intentional failing test for assignment evidence"
 git push origin main
 ```
-
 The pipeline should stop at the test stage and send a failure email.
+FYI: Above is just example how to fail the pipleline, but I have failed incident before success so adding for referance
 
-## Screenshot_S21
-Take a Screenshot_showing the failed workflow at the Test stage.
+## ![Screenshot](reference/Screenshot_S18.png)
 
-## Screenshot_S22
-Take a Screenshot_showing the failure email with failed stage details.
 
-After screenshot, remove the failing test and push again.
+## ![Screenshot](reference/Screenshot_S19.png)
 
-## 26. Manual deployment if pipeline is unavailable
+
+## 25. Manual deployment if pipeline is unavailable
 
 SSH to EC2:
 
@@ -572,13 +604,13 @@ ssh -i your-key.pem ubuntu@EC2_PUBLIC_IP
 Login to ECR:
 
 ```bash
-aws ecr get-login-password --region AWS_REGION | docker login --username AWS --password-stdin AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 960346386867.dkr.ecr.us-east-1.amazonaws.com
 ```
 
 Pull image:
 
 ```bash
-docker pull AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com/student-registration-app:IMAGE_TAG
+docker pull 960346386867.dkr.ecr.us-east-1.amazonaws.com/student-registration-app:7ae11e9af33fe9ff4ec67d83eb893ee3d3137bb7
 ```
 
 Replace container:
@@ -586,7 +618,7 @@ Replace container:
 ```bash
 docker stop flask-student-app || true
 docker rm flask-student-app || true
-docker run -d --name flask-student-app --restart unless-stopped -p 5000:5000 AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com/student-registration-app:IMAGE_TAG
+docker run -d --name flask-student-app --restart unless-stopped -p 5000:5000 -e MONGO_URI="mongodb+srv://mueenab:Passw0rd123@mueenb-cluster.p6fijvk.mongodb.net/mbtest?retryWrites=true&w=majority" 960346386867.dkr.ecr.us-east-1.amazonaws.com/student-registration-app:7ae11e9af33fe9ff4ec67d83eb893ee3d3137bb7
 ```
 
 Verify:
@@ -595,32 +627,34 @@ Verify:
 curl http://localhost:5000/health
 ```
 
-## Screenshot_S23
-Take a Screenshot_showing manual deployment commands if you use them.
+## ![Screenshot](reference/Screenshot_S20.png)
 
-## 27. Cleanup to avoid AWS cost
+
+## 26. Cleanup to avoid AWS cost
 
 After all screenshots and submission evidence are collected:
 
 1. Terminate EC2 instance
-2. Delete ECR repository and images
-3. Delete unused EBS volumes
-4. Delete snapshots if any were created
-5. Delete IAM user or access keys used for GitHub Actions
-6. Delete IAM role if not needed
-7. Confirm no Elastic IP is allocated
+2. Deleted unused EBS volumes
+3. Deleted IAM role
+4. Deleted ECR repository and images
+5. Deleted IAM access keys used for GitHub Actions
+6. Confirmed snapshots if any were created
+7. Confirmed no Elastic IP is allocated
 
-## Screenshot_S24
-Take a Screenshot_showing EC2 terminated and ECR repository deleted, if required for your own record.
+## Before_Deleted
+## ![Screenshot](reference/Screenshot_S21.png)
 
-## 28. Final submission
 
-Submit the GitHub repository link using VLearn as requested. Include screenshots or a short recording showing:
+## After_Deleted
+## ![Screenshot](reference/Screenshot_S22.png)
 
-1. Full successful pipeline run
-2. Successful EC2 deployment
-3. Success email
-4. Intentional failed pipeline
-5. Failure email
-6. Updated README
 
+## 27. Final submission
+Done by uploading Graded_Assignment_on_CICD_Pipeline.txt at VLearn Portal as submission with this current repo URL.
+Also adding GitHub Actions workflow repo: https://github.com/brainstorm8mueen/student-registration-app
+
+## Referance
+https://github.com/mohanDevOps-arch/flask_Practice
+AI use by Copilot
+Internet help by Google
