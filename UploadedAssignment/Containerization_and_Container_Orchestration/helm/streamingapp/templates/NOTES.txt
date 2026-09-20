@@ -1,0 +1,4 @@
+1. Check the Ingress address:
+   kubectl get ingress streamingapp -n {{ .Release.Namespace }}
+2. Check workloads:
+   kubectl get pods,svc -n {{ .Release.Namespace }}

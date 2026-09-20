@@ -1,0 +1,81 @@
+global:
+  awsAccountId: "REPLACE_ME"
+  awsRegion: ap-south-1
+  ecrRegistry: "REPLACE_ME.dkr.ecr.ap-south-1.amazonaws.com"
+  imagePullPolicy: IfNotPresent
+
+services:
+  auth:
+    image: { repository: streaming-auth, tag: "1.0.0" }
+    replicas: 2
+    port: 3001
+    ingressPath: /api/auth
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits: { cpu: 500m, memory: 512Mi }
+  streaming:
+    image: { repository: streaming-streaming, tag: "1.0.0" }
+    replicas: 2
+    port: 3002
+    ingressPath: /api/streaming
+    resources:
+      requests: { cpu: 150m, memory: 256Mi }
+      limits: { cpu: "1", memory: 1Gi }
+  admin:
+    image: { repository: streaming-admin, tag: "1.0.0" }
+    replicas: 2
+    port: 3003
+    ingressPath: /api/admin
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits: { cpu: 500m, memory: 512Mi }
+  chat:
+    image: { repository: streaming-chat, tag: "1.0.0" }
+    replicas: 2
+    port: 3004
+    ingressPath: /api/chat
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits: { cpu: 500m, memory: 512Mi }
+  frontend:
+    image: { repository: streaming-frontend, tag: "1.0.0" }
+    replicas: 2
+    port: 80
+    ingressPath: /
+    resources:
+      requests: { cpu: 50m, memory: 64Mi }
+      limits: { cpu: 250m, memory: 256Mi }
+
+config:
+  clientUrls: "https://streaming.example.com"
+  awsS3Bucket: "REPLACE_ME"
+  awsCdnUrl: ""
+  streamingPublicUrl: "https://streaming.example.com/api/streaming"
+
+secrets:
+  jwtSecret: "REPLACE_WITH_A_LONG_RANDOM_VALUE"
+  awsAccessKeyId: ""
+  awsSecretAccessKey: ""
+
+mongo:
+  image: mongo:7.0
+  storageSize: 5Gi
+  storageClassName: gp3
+  database: streamingapp
+  resources:
+    requests: { cpu: 100m, memory: 256Mi }
+    limits: { cpu: 500m, memory: 1Gi }
+
+ingress:
+  enabled: true
+  className: alb
+  host: streaming.example.com
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+  tls: []
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1

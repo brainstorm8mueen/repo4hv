@@ -1,0 +1,86 @@
+pipeline {
+  agent any
+
+  environment {
+    AWS_REGION = 'ap-south-1'
+    EKS_CLUSTER = 'streamingapp-eks'
+    HELM_RELEASE = 'streamingapp'
+    K8S_NAMESPACE = 'streamingapp'
+    AWS_ACCOUNT_ID = credentials('aws-account-id')
+    AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
+    AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+    ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+        script { env.IMAGE_TAG = sh(script: 'git rev-parse --short=12 HEAD', returnStdout: true).trim() }
+      }
+    }
+
+    stage('Validate Helm') {
+      steps {
+        sh 'helm lint helm/streamingapp'
+        sh 'helm template streamingapp helm/streamingapp --namespace streamingapp > /tmp/streamingapp-rendered.yaml'
+      }
+    }
+
+    stage('ECR Login') {
+      steps {
+        sh 'aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$ECR_REGISTRY"'
+      }
+    }
+
+    stage('Build and Push Images') {
+      steps {
+        sh 'chmod +x scripts/build-and-push.sh && scripts/build-and-push.sh'
+      }
+    }
+
+    stage('Configure EKS') {
+      steps {
+        sh 'aws eks update-kubeconfig --region "$AWS_REGION" --name "$EKS_CLUSTER"'
+        sh 'kubectl cluster-info'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sh """
+          helm upgrade --install "$HELM_RELEASE" helm/streamingapp \
+            --namespace "$K8S_NAMESPACE" \
+            --create-namespace \
+            --set global.ecrRegistry="$ECR_REGISTRY" \
+            --set services.auth.image.tag="$IMAGE_TAG" \
+            --set services.streaming.image.tag="$IMAGE_TAG" \
+            --set services.admin.image.tag="$IMAGE_TAG" \
+            --set services.chat.image.tag="$IMAGE_TAG" \
+            --set services.frontend.image.tag="$IMAGE_TAG" \
+            --wait --timeout 15m
+        """
+      }
+    }
+
+    stage('Verify') {
+      steps {
+        sh """
+          for d in auth streaming admin chat frontend; do
+            kubectl rollout status deployment/streamingapp-$d -n "$K8S_NAMESPACE" --timeout=5m
+          done
+          kubectl get pods,svc,ingress -n "$K8S_NAMESPACE" -o wide
+        """
+      }
+    }
+  }
+
+  post {
+    always {
+      sh 'docker logout "$ECR_REGISTRY" || true'
+      cleanWs()
+    }
+    success { echo "Deployment succeeded for image tag ${IMAGE_TAG}" }
+    failure { echo "Pipeline failed. Review the failed stage and console output." }
+  }
+}

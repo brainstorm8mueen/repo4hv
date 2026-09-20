@@ -1,0 +1,8 @@
+.env
+*.pem
+*.key
+rendered.yaml
+.DS_Store
+*.tfstate
+*.tfstate.*
+docs/screenshots/*.tmp
