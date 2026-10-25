@@ -1,0 +1,9 @@
+*.pem
+*.key
+.env
+terraform/terraform.tfvars
+terraform/.terraform/
+terraform/*.tfstate*
+ansible/inventory.ini
+ansible/group_vars/all.yml
+FOR_ME_*.txt

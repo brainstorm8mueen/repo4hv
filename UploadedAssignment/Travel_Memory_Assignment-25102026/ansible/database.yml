@@ -1,0 +1,53 @@
+---
+- name: Configure private MongoDB server
+  hosts: db
+  become: true
+  vars_files: [group_vars/all.yml]
+  tasks:
+    - name: Install required packages
+      ansible.builtin.apt:
+        name: [gnupg, curl, ufw, python3-pymongo]
+        update_cache: true
+    - name: Add MongoDB signing key
+      ansible.builtin.shell: |
+        curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg --dearmor --yes -o /usr/share/keyrings/mongodb-server-7.0.gpg
+      args: { creates: /usr/share/keyrings/mongodb-server-7.0.gpg }
+    - name: Add MongoDB repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse"
+        filename: mongodb-org-7.0
+    - name: Install MongoDB
+      ansible.builtin.apt: { name: mongodb-org, update_cache: true }
+    - name: Bind MongoDB to localhost and private IP
+      ansible.builtin.replace:
+        path: /etc/mongod.conf
+        regexp: '^  bindIp:.*$'
+        replace: '  bindIp: 127.0.0.1,{{ ansible_default_ipv4.address }}'
+      notify: Restart MongoDB
+    - name: Start MongoDB
+      ansible.builtin.service: { name: mongod, state: started, enabled: true }
+    - name: Create MongoDB administrator
+      community.mongodb.mongodb_user:
+        database: admin
+        name: "{{ mongo_admin_user }}"
+        password: "{{ mongo_admin_password }}"
+        roles: [{ role: readWrite, db: "{{ mongo_database }}" }]
+        state: present
+      no_log: true
+    - name: Enable MongoDB authorization
+      ansible.builtin.blockinfile:
+        path: /etc/mongod.conf
+        marker: "# {mark} ANSIBLE SECURITY"
+        block: |
+          security:
+            authorization: enabled
+      notify: Restart MongoDB
+    - name: UFW allow SSH
+      community.general.ufw: { rule: allow, port: '22', proto: tcp }
+    - name: UFW allow MongoDB from web private IP
+      community.general.ufw: { rule: allow, port: '27017', proto: tcp, from_ip: "{{ vpc_cidr }}" }
+    - name: Enable UFW
+      community.general.ufw: { state: enabled, policy: deny }
+  handlers:
+    - name: Restart MongoDB
+      ansible.builtin.service: { name: mongod, state: restarted }

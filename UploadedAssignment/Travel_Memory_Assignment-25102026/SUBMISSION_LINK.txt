@@ -1,0 +1,6 @@
+Graded Assignment: Deploying a MERN Application through Terraform and Ansible
+
+Student Name: Mueen Aziz Bhombal
+GitHub Repository: REPLACE_WITH_YOUR_FINAL_GITHUB_REPOSITORY_URL
+
+The repository contains Terraform scripts, Ansible playbooks, the implementation report, and screenshot evidence.
