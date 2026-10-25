@@ -1,9 +1,14 @@
 *.pem
 *.key
 .env
+backend/uploads/
+frontend/build/
+node_modules/
 terraform/terraform.tfvars
 terraform/.terraform/
 terraform/*.tfstate*
+terraform/tfplan
 ansible/inventory.ini
 ansible/group_vars/all.yml
-FOR_ME_*.txt
+FOR_ME_*.md
+.DS_Store

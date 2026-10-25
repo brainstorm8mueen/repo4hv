@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 // Used for error, empty and not-found states so they all look the same
-export default function StatusMessage({ icon = "🧭", title, message, onRetry, action }) {
+export default function StatusMessage({ icon = "ðŸ§­", title, message, onRetry, action }) {
   return (
     <div className="tm-status">
       <div className="tm-status__icon" aria-hidden="true">{icon}</div>

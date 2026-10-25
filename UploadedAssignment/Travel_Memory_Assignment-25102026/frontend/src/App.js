@@ -17,7 +17,7 @@ function Layout() {
         <Outlet />
       </main>
       <footer className="tm-footer">
-        <div className="container">Travel Memory · Keep every journey</div>
+        <div className="container">Travel Memory Â· Keep every journey</div>
       </footer>
     </div>
   );
@@ -26,7 +26,7 @@ function Layout() {
 function RouteError() {
   return (
     <div className="container py-5">
-      <StatusMessage icon="⚠️" title="Something went wrong" message="An unexpected error occurred while showing this page." action={{ to: "/", label: "Go home" }} />
+      <StatusMessage icon="âš ï¸" title="Something went wrong" message="An unexpected error occurred while showing this page." action={{ to: "/", label: "Go home" }} />
     </div>
   );
 }

@@ -1,128 +1,129 @@
-# TravelMemory MERN Deployment using Terraform and Ansible
+# TravelMemory MERN Deployment with Terraform and Ansible
 
 ## Assignment objective
-Deploy the TravelMemory MERN application on AWS using Terraform for infrastructure provisioning and Ansible for configuration, deployment, MongoDB security, and host hardening.
+Deploy the TravelMemory MERN application on AWS. Terraform provisions the VPC, public/private subnets, Internet Gateway, NAT Gateway, routes, EC2 instances, IAM role, security groups, outputs, and basic CloudWatch monitoring. Ansible installs and secures MongoDB, configures Node.js and Nginx, builds React, and runs Express as a systemd service.
 
 ## Architecture
-- AWS VPC: `10.20.0.0/16`
-- Public subnet: web EC2 instance, Internet Gateway, inbound SSH restricted to the administrator's `/32`, application on TCP 3000
-- Private subnet: MongoDB EC2 instance with no public IP, outbound updates through a NAT Gateway
-- MongoDB TCP 27017: allowed only from the web-server security group
-- Terraform: creates network, routes, security groups, IAM role/profile, encrypted EC2 volumes, and outputs
-- Ansible: installs Node.js, NPM, Nginx, MongoDB, deploys the application, creates a MongoDB user, configures UFW, disables root SSH, and creates a systemd service
+- Public subnet: Ubuntu web EC2 with SSH limited to the administrator `/32`; Nginx and React on TCP 3000; Express on localhost TCP 3001.
+- Private subnet: Ubuntu MongoDB EC2 without a public IP; outbound package access through the required NAT Gateway.
+- MongoDB TCP 27017 and database SSH are permitted only from the web security group.
+- Application flow: browser -> Nginx/React -> Express routes `/trip`, `/uploads`, `/health` -> MongoDB private IP.
+- Monitoring: CloudWatch alarms for both EC2 status checks and web CPU above 80%.
 
 ## Repository layout
 ```text
-terraform/       AWS infrastructure as code
-ansible/         Configuration and deployment playbooks
-backend/         Original TravelMemory Express backend
-frontend/        Original TravelMemory React frontend
-screenshots/     Submission evidence using fixed names
-IMPLEMENTATION_REPORT.md
-SUBMISSION_LINK.txt
+backend/                TravelMemory Express application
+frontend/               TravelMemory React application
+terraform/              AWS infrastructure
+ansible/                Configuration and application deployment
+screenshots/             Evidence paths used below
+IMPLEMENTATION_REPORT.md Detailed assignment report
+SUBMISSION_LINK.txt      File to submit through Vlearn
 ```
 
 ## Prerequisites
-- AWS account, AWS CLI, Terraform >= 1.6, Ansible, Git
-- Existing AWS EC2 key pair in the selected region
-- Local SSH private key with permission `chmod 400 KEY.pem`
-- A fork/copy of the original TravelMemory source in this repository under `backend/` and `frontend/`
+AWS account, AWS CLI, Terraform 1.6+, Ansible, Git, an EC2 key pair in `ap-south-1`, and the matching local PEM file.
 
-## 1. Configure AWS credentials
+## 1. AWS authentication
 ```bash
 aws configure
 aws sts get-caller-identity
 ```
 
-## 2. Provision infrastructure
+### AWS CLI identity
+![AWS CLI identity](screenshots/01-aws-identity.png)
+
+## 2. Terraform initialization and validation
 ```bash
 cd terraform
 cp terraform.tfvars.example terraform.tfvars
-# Edit key_name and admin_cidr. Do not commit terraform.tfvars.
+# Set key_name and admin_cidr in terraform.tfvars
 terraform fmt -recursive
 terraform init
 terraform validate
+```
+
+### Terraform initialized and validated
+![Terraform initialized](screenshots/02-terraform-init-validate.png)
+
+## 3. Terraform plan and apply
+```bash
 terraform plan -out=tfplan
 terraform apply tfplan
 terraform output
 ```
 
-## 3. Configure Ansible
+### Terraform plan
+![Terraform plan](screenshots/03-terraform-plan.png)
+
+### Terraform apply
+![Terraform apply](screenshots/04-terraform-apply.png)
+
+### VPC, public subnet, and private subnet
+![AWS VPC and subnets](screenshots/05-aws-vpc-subnets.png)
+
+### EC2 web and database instances
+![EC2 instances](screenshots/06-ec2-instances.png)
+
+### Security groups and restricted rules
+![Security groups](screenshots/07-security-groups.png)
+
+### CloudWatch alarms
+![CloudWatch alarms](screenshots/08-cloudwatch-alarms.png)
+
+## 4. Ansible configuration and deployment
 ```bash
 cd ../ansible
 ansible-galaxy collection install -r requirements.yml
 cp inventory.ini.example inventory.ini
 cp group_vars/all.yml.example group_vars/all.yml
-```
-Update `inventory.ini` with Terraform outputs. Update `group_vars/all.yml` with your repository URL and a strong MongoDB password. These real files are ignored by Git.
-
-## 4. Test connectivity and deploy
-```bash
-ansible web -m ping
-ansible db -m ping
+# Replace all placeholders using terraform output values and your local PEM path.
+ansible all -m ping
 ansible-playbook --syntax-check site.yml
 ansible-playbook site.yml
 ```
 
-Open the application URL returned by `terraform output application_url`. Add a travel record and verify it remains available after refreshing the page.
+### Ansible connectivity
+![Ansible ping](screenshots/09-ansible-ping.png)
 
-## Validation commands
+### Ansible deployment completed
+![Ansible playbook](screenshots/10-ansible-playbook-success.png)
+
+## 5. Service and application validation
 ```bash
-curl http://WEB_PUBLIC_IP:3000
-ssh -i KEY.pem ubuntu@WEB_PUBLIC_IP 'systemctl status travelmemory --no-pager'
-ssh -i KEY.pem ubuntu@WEB_PUBLIC_IP 'systemctl status nginx --no-pager'
-ssh -J ubuntu@WEB_PUBLIC_IP -i KEY.pem ubuntu@DB_PRIVATE_IP 'systemctl status mongod --no-pager'
+curl http://WEB_PUBLIC_IP:3000/health
+ssh -i ~/.ssh/YOUR_KEY.pem ubuntu@WEB_PUBLIC_IP 'sudo systemctl --no-pager status travelmemory nginx'
+ssh -J ubuntu@WEB_PUBLIC_IP -i ~/.ssh/YOUR_KEY.pem ubuntu@DB_PRIVATE_IP 'sudo systemctl --no-pager status mongod'
 ```
+Browse to the `application_url` Terraform output. Create a travel record, refresh the page, and confirm that the record remains available.
 
-## Screenshot evidence
-The README uses fixed paths. Place screenshots in `screenshots/` with these exact names:
+### MongoDB service on private instance
+![MongoDB service](screenshots/11-mongodb-service.png)
 
-1. `01-terraform-init.png`
-2. `02-terraform-plan.png`
-3. `03-terraform-apply.png`
-4. `04-aws-vpc-subnets.png`
-5. `05-ec2-instances.png`
-6. `06-security-groups.png`
-7. `07-ansible-playbook-success.png`
-8. `08-mongodb-service.png`
-9. `09-travelmemory-home.png`
-10. `10-travelmemory-create-record.png`
-11. `11-travelmemory-record-list.png`
-12. `12-terraform-destroy.png`
+### TravelMemory home page
+![TravelMemory home](screenshots/12-travelmemory-home.png)
 
-### Deployment evidence
-![Terraform initialized](screenshots/01-terraform-init.png)
-![Terraform plan](screenshots/02-terraform-plan.png)
-![Terraform apply](screenshots/03-terraform-apply.png)
-![AWS VPC and subnets](screenshots/04-aws-vpc-subnets.png)
-![EC2 instances](screenshots/05-ec2-instances.png)
-![Security groups](screenshots/06-security-groups.png)
-![Ansible playbook success](screenshots/07-ansible-playbook-success.png)
-![MongoDB service](screenshots/08-mongodb-service.png)
-![TravelMemory home page](screenshots/09-travelmemory-home.png)
-![Create travel record](screenshots/10-travelmemory-create-record.png)
-![Saved travel record](screenshots/11-travelmemory-record-list.png)
+### Create a travel record
+![Create travel record](screenshots/13-travelmemory-create-record.png)
+
+### Persisted travel record
+![Persisted travel record](screenshots/14-travelmemory-record-list.png)
 
 ## Security controls
-- No database public IP
-- SSH to the public server restricted to one administrator CIDR
-- Database SSH and MongoDB allowed only from the web security group
-- Encrypted gp3 root volumes and IMDSv2 required
-- MongoDB authentication enabled; secret files excluded from Git
-- Root SSH disabled; UFW enabled; application runs as a non-login service account
+- Database has no public IP.
+- SSH to public EC2 is restricted to `admin_cidr`.
+- Database SSH and MongoDB are restricted by security-group source reference.
+- Encrypted gp3 roots and IMDSv2 are required.
+- MongoDB authentication, UFW deny-by-default, disabled root SSH, a non-login service user, and Git exclusions protect secrets and hosts.
 
 ## Cleanup
-The NAT Gateway and EC2 instances incur charges. Capture evidence, then clean up:
 ```bash
 cd terraform
 terraform destroy
 ```
-Capture `12-terraform-destroy.png` after completion.
 
-## Important notes
-- Never commit `.pem`, `.env`, `terraform.tfvars`, Ansible inventory, passwords, or Terraform state.
-- A NAT Gateway has an hourly and data-processing cost. Destroy the lab promptly.
-- Replace all placeholders before deployment.
+### Terraform destroy completed
+![Terraform destroy](screenshots/15-terraform-destroy.png)
 
 ## Source application
-Original application: https://github.com/UnpredictablePrashant/TravelMemory
+Original source: https://github.com/UnpredictablePrashant/TravelMemory

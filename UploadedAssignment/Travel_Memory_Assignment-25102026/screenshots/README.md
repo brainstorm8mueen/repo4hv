@@ -1,14 +1,17 @@
-# Screenshot folder
-Add the evidence files using exactly these names so the main README never needs editing:
-01-terraform-init.png
-02-terraform-plan.png
-03-terraform-apply.png
-04-aws-vpc-subnets.png
-05-ec2-instances.png
-06-security-groups.png
-07-ansible-playbook-success.png
-08-mongodb-service.png
-09-travelmemory-home.png
-10-travelmemory-create-record.png
-11-travelmemory-record-list.png
-12-terraform-destroy.png
+# Evidence filenames
+
+01-aws-identity.png
+02-terraform-init-validate.png
+03-terraform-plan.png
+04-terraform-apply.png
+05-aws-vpc-subnets.png
+06-ec2-instances.png
+07-security-groups.png
+08-cloudwatch-alarms.png
+09-ansible-ping.png
+10-ansible-playbook-success.png
+11-mongodb-service.png
+12-travelmemory-home.png
+13-travelmemory-create-record.png
+14-travelmemory-record-list.png
+15-terraform-destroy.png

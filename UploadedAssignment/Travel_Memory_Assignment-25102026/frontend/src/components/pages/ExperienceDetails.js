@@ -11,7 +11,7 @@ function Detail({ label, value }) {
     <div className="col-6 col-md-4">
       <div className="tm-detail">
         <div className="tm-detail__label">{label}</div>
-        <div className="tm-detail__value">{value || "—"}</div>
+        <div className="tm-detail__value">{value || "â€”"}</div>
       </div>
     </div>
   );
@@ -47,14 +47,14 @@ export default function ExperienceDetails() {
   if (error?.notFound) {
     return (
       <div className="container py-5">
-        <StatusMessage icon="🧳" title="Trip not found" message="This trip doesn't exist or may have been removed." action={{ to: "/", label: "Back to all trips" }} />
+        <StatusMessage icon="ðŸ§³" title="Trip not found" message="This trip doesn't exist or may have been removed." action={{ to: "/", label: "Back to all trips" }} />
       </div>
     );
   }
   if (error) {
     return (
       <div className="container py-5">
-        <StatusMessage icon="⚠️" title="Couldn't load this trip" message={error.message} onRetry={() => load()} />
+        <StatusMessage icon="âš ï¸" title="Couldn't load this trip" message={error.message} onRetry={() => load()} />
       </div>
     );
   }
@@ -71,7 +71,7 @@ export default function ExperienceDetails() {
         </div>
       )}
 
-      <Link to="/" className="btn btn-link px-0 mb-3">← Back to all trips</Link>
+      <Link to="/" className="btn btn-link px-0 mb-3">â† Back to all trips</Link>
 
       <div className="tm-details__hero mb-4">
         <TripImage image={data.image} alt={data.tripName} className="tm-details__image" />
@@ -80,7 +80,7 @@ export default function ExperienceDetails() {
       <div className="d-flex flex-wrap align-items-center gap-2 mb-2">
         <h1 className="mb-0 me-2">{data.tripName}</h1>
         {data.tripType && <span className={`badge tm-type tm-type--${data.tripType}`}>{capitalize(data.tripType)}</span>}
-        {data.featured && <span className="badge tm-badge-featured position-static">★ Featured</span>}
+        {data.featured && <span className="badge tm-badge-featured position-static">â˜… Featured</span>}
       </div>
       {data.shortDescription && <p className="lead text-body-secondary">{data.shortDescription}</p>}
 

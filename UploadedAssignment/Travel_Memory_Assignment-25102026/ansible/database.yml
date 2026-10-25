@@ -4,13 +4,12 @@
   become: true
   vars_files: [group_vars/all.yml]
   tasks:
-    - name: Install required packages
+    - name: Install prerequisites
       ansible.builtin.apt:
         name: [gnupg, curl, ufw, python3-pymongo]
         update_cache: true
     - name: Add MongoDB signing key
-      ansible.builtin.shell: |
-        curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg --dearmor --yes -o /usr/share/keyrings/mongodb-server-7.0.gpg
+      ansible.builtin.shell: curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg --dearmor --yes -o /usr/share/keyrings/mongodb-server-7.0.gpg
       args: { creates: /usr/share/keyrings/mongodb-server-7.0.gpg }
     - name: Add MongoDB repository
       ansible.builtin.apt_repository:
@@ -18,15 +17,15 @@
         filename: mongodb-org-7.0
     - name: Install MongoDB
       ansible.builtin.apt: { name: mongodb-org, update_cache: true }
-    - name: Bind MongoDB to localhost and private IP
+    - name: Bind MongoDB to localhost and private address
       ansible.builtin.replace:
         path: /etc/mongod.conf
         regexp: '^  bindIp:.*$'
         replace: '  bindIp: 127.0.0.1,{{ ansible_default_ipv4.address }}'
       notify: Restart MongoDB
-    - name: Start MongoDB
+    - name: Start MongoDB before creating user
       ansible.builtin.service: { name: mongod, state: started, enabled: true }
-    - name: Create MongoDB administrator
+    - name: Create authenticated application user
       community.mongodb.mongodb_user:
         database: admin
         name: "{{ mongo_admin_user }}"
@@ -42,12 +41,17 @@
           security:
             authorization: enabled
       notify: Restart MongoDB
-    - name: UFW allow SSH
-      community.general.ufw: { rule: allow, port: '22', proto: tcp }
-    - name: UFW allow MongoDB from web private IP
-      community.general.ufw: { rule: allow, port: '27017', proto: tcp, from_ip: "{{ vpc_cidr }}" }
-    - name: Enable UFW
+    - name: Allow SSH only from web private address
+      community.general.ufw: { rule: allow, port: '22', proto: tcp, from_ip: "{{ hostvars['web']['ansible_default_ipv4']['address'] }}" }
+    - name: Allow MongoDB only from web private address
+      community.general.ufw: { rule: allow, port: '27017', proto: tcp, from_ip: "{{ hostvars['web']['ansible_default_ipv4']['address'] }}" }
+    - name: Enable deny-by-default firewall
       community.general.ufw: { state: enabled, policy: deny }
+    - name: Disable root SSH login
+      ansible.builtin.lineinfile: { path: /etc/ssh/sshd_config, regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+      notify: Restart SSH
   handlers:
     - name: Restart MongoDB
-      ansible.builtin.service: { name: mongod, state: restarted }
+      ansible.builtin.service: { name: mongod, state: restarted, enabled: true }
+    - name: Restart SSH
+      ansible.builtin.service: { name: ssh, state: restarted }

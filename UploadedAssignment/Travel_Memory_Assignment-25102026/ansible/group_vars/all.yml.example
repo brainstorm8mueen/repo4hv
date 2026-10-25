@@ -1,8 +1,10 @@
-repo_url: "https://github.com/YOUR_GITHUB_USERNAME/TravelMemory-Assignment.git"
-app_dir: "/opt/travelmemory"
+repo_url: "https://github.com/brainstorm8mueen/repo4hv.git"
+repo_version: "main"
+repository_subdirectory: "UploadedAssignment/Travel_Memory_Assignment-25102026"
+app_dir: "/opt/repo4hv"
+project_dir: "/opt/repo4hv/UploadedAssignment/Travel_Memory_Assignment-25102026"
 app_port: 3000
 backend_port: 3001
 mongo_database: "travelmemory"
 mongo_admin_user: "traveladmin"
 mongo_admin_password: "CHANGE_TO_A_STRONG_PASSWORD"
-vpc_cidr: "10.20.0.0/16"

@@ -1,6 +1,6 @@
 // Dates are stored as "YYYY-MM-DD" (older trips may use "DD-MM-YYYY")
 export function formatDate(value) {
-  if (!value) return "—";
+  if (!value) return "â€”";
   const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
   const legacy = /^(\d{2})-(\d{2})-(\d{4})$/.exec(value);
   let date;
@@ -11,7 +11,7 @@ export function formatDate(value) {
 }
 
 export function formatCost(value) {
-  if (value === undefined || value === null || value === "") return "—";
+  if (value === undefined || value === null || value === "") return "â€”";
   return new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(value);
 }
 

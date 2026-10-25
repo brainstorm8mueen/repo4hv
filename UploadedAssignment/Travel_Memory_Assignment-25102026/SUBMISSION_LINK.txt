@@ -1,6 +1,6 @@
 Graded Assignment: Deploying a MERN Application through Terraform and Ansible
 
 Student Name: Mueen Aziz Bhombal
-GitHub Repository: REPLACE_WITH_YOUR_FINAL_GITHUB_REPOSITORY_URL
+GitHub Repository: https://github.com/brainstorm8mueen/repo4hv/tree/main/UploadedAssignment/Travel_Memory_Assignment-25102026
 
 The repository contains Terraform scripts, Ansible playbooks, the implementation report, and screenshot evidence.

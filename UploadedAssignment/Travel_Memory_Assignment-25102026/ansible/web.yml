@@ -4,7 +4,7 @@
   become: true
   vars_files: [group_vars/all.yml]
   tasks:
-    - name: Install base packages
+    - name: Install platform packages
       ansible.builtin.apt: { name: [git, curl, nginx, ufw], update_cache: true }
     - name: Install Node.js 20 repository
       ansible.builtin.shell: curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
@@ -14,44 +14,41 @@
     - name: Create service account
       ansible.builtin.user: { name: travelmemory, system: true, create_home: true, shell: /usr/sbin/nologin }
     - name: Clone assignment repository
-      ansible.builtin.git: { repo: "{{ repo_url }}", dest: "{{ app_dir }}", version: main, force: true }
-    - name: Set application ownership
+      ansible.builtin.git: { repo: "{{ repo_url }}", dest: "{{ app_dir }}", version: "{{ repo_version }}", force: true }
+    - name: Ensure application ownership
       ansible.builtin.file: { path: "{{ app_dir }}", owner: travelmemory, group: travelmemory, recurse: true }
     - name: Install backend dependencies
-      community.general.npm: { path: "{{ app_dir }}/backend", production: true }
-    - name: Write backend environment file
+      community.general.npm: { path: "{{ project_dir }}/backend", production: true }
+    - name: Write backend environment
       ansible.builtin.copy:
-        dest: "{{ app_dir }}/backend/.env"
+        dest: "{{ project_dir }}/backend/.env"
         owner: travelmemory
         group: travelmemory
         mode: '0600'
         content: |
           MONGO_URI=mongodb://{{ mongo_admin_user }}:{{ mongo_admin_password | urlencode }}@{{ hostvars['db']['ansible_host'] }}:27017/{{ mongo_database }}?authSource=admin
           PORT={{ backend_port }}
+          CORS_ORIGIN=http://{{ ansible_host }}:{{ app_port }}
+          UPLOAD_DIR=uploads
+          MAX_UPLOAD_MB=5
+          TRUST_PROXY=1
+          NODE_ENV=production
       no_log: true
     - name: Write frontend environment
       ansible.builtin.copy:
-        dest: "{{ app_dir }}/frontend/.env"
-        content: "REACT_APP_BACKEND_URL=http://{{ hostvars['web']['ansible_host'] }}:{{ app_port }}/api\n"
+        dest: "{{ project_dir }}/frontend/.env"
+        content: "REACT_APP_BACKEND_URL=http://{{ ansible_host }}:{{ app_port }}\n"
     - name: Install frontend dependencies
-      community.general.npm: { path: "{{ app_dir }}/frontend" }
+      community.general.npm: { path: "{{ project_dir }}/frontend" }
     - name: Build React frontend
       ansible.builtin.command: npm run build
-      args: { chdir: "{{ app_dir }}/frontend", creates: "{{ app_dir }}/frontend/build/index.html" }
+      args: { chdir: "{{ project_dir }}/frontend" }
+      environment: { CI: "false" }
     - name: Install systemd service
-      ansible.builtin.template: { src: templates/travelmemory.service.j2, dest: /etc/systemd/system/travelmemory.service }
+      ansible.builtin.template: { src: templates/travelmemory.service.j2, dest: /etc/systemd/system/travelmemory.service, mode: '0644' }
       notify: Restart TravelMemory
-    - name: Configure Nginx
-      ansible.builtin.copy:
-        dest: /etc/nginx/sites-available/travelmemory
-        content: |
-          server {
-            listen {{ app_port }} default_server;
-            root {{ app_dir }}/frontend/build;
-            index index.html;
-            location /api/ { proxy_pass http://127.0.0.1:{{ backend_port }}/; proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; }
-            location / { try_files $uri /index.html; }
-          }
+    - name: Configure Nginx for frontend and real application routes
+      ansible.builtin.template: { src: templates/nginx-travelmemory.conf.j2, dest: /etc/nginx/sites-available/travelmemory, mode: '0644' }
       notify: Restart Nginx
     - name: Enable Nginx site
       ansible.builtin.file: { src: /etc/nginx/sites-available/travelmemory, dest: /etc/nginx/sites-enabled/travelmemory, state: link }
@@ -59,10 +56,10 @@
     - name: Remove default Nginx site
       ansible.builtin.file: { path: /etc/nginx/sites-enabled/default, state: absent }
       notify: Restart Nginx
-    - name: Allow SSH and application port in UFW
+    - name: Allow SSH and application port
       community.general.ufw: { rule: allow, port: "{{ item }}", proto: tcp }
       loop: ['22', '{{ app_port }}']
-    - name: Enable UFW
+    - name: Enable deny-by-default firewall
       community.general.ufw: { state: enabled, policy: deny }
     - name: Disable root SSH login
       ansible.builtin.lineinfile: { path: /etc/ssh/sshd_config, regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }

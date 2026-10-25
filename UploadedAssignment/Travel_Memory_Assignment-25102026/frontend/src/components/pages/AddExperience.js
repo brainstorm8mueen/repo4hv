@@ -225,7 +225,7 @@ export default function AddExperience() {
                     <div className="tm-preview mt-3">
                       <img src={preview} alt="Selected cover preview" />
                       <button type="button" className="btn btn-sm btn-light tm-preview__remove" onClick={clearFile} aria-label="Remove image">
-                        ✕
+                        âœ•
                       </button>
                     </div>
                   )}

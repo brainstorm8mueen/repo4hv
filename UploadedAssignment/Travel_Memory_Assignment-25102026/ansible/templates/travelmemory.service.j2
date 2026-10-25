@@ -1,15 +1,18 @@
 [Unit]
 Description=TravelMemory MERN backend
-After=network.target
+After=network-online.target
+Wants=network-online.target
+
 [Service]
 Type=simple
 User=travelmemory
-WorkingDirectory={{ app_dir }}/backend
-EnvironmentFile={{ app_dir }}/backend/.env
+WorkingDirectory={{ project_dir }}/backend
+EnvironmentFile={{ project_dir }}/backend/.env
 ExecStart=/usr/bin/node index.js
 Restart=always
 RestartSec=5
 NoNewPrivileges=true
 PrivateTmp=true
+
 [Install]
 WantedBy=multi-user.target
