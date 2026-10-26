@@ -8,10 +8,10 @@ terraform/terraform.tfvars
 terraform/.terraform/
 terraform/*.tfstate*
 terraform/tfplan
+terraform/*.tfplan
+terraform/crash.log
 ansible/inventory.ini
 ansible/group_vars/all.yml
 FOR_ME_*.md
 .DS_Store
 *.ppk
-screenshots/*.png
-screenshots/old/
