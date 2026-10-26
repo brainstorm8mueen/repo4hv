@@ -13,3 +13,5 @@ ansible/group_vars/all.yml
 FOR_ME_*.md
 .DS_Store
 *.ppk
+screenshots/*.png
+screenshots/old/
