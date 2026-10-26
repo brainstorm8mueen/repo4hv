@@ -9,7 +9,7 @@ export default function Card({ id, title, tripType, description, image, startDat
       <div className={`card tm-card h-100 ${featured ? "tm-card--featured" : ""}`}>
         <div className="tm-card__media">
           <TripImage image={image} alt={title} className="tm-card__image" />
-          {featured && <span className="badge tm-badge-featured">â˜… Featured</span>}
+          {featured && <span className="badge tm-badge-featured">★ Featured</span>}
         </div>
         <div className="card-body d-flex flex-column">
           <div className="d-flex justify-content-between align-items-start gap-2 mb-1">

@@ -14,7 +14,7 @@ function Header() {
     <nav className="navbar navbar-expand-md tm-navbar sticky-top">
       <div className="container">
         <Link className="navbar-brand tm-brand" to="/">
-          <span aria-hidden="true">âœˆï¸</span> Travel Memory
+          <span aria-hidden="true">✈</span> Travel Memory
         </Link>
         <button
           className="navbar-toggler"

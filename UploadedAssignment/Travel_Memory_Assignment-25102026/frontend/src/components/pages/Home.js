@@ -65,7 +65,7 @@ export default function Home() {
 
   let content;
   if (error) {
-    content = <StatusMessage icon="âš ï¸" title="Couldn't load your trips" message={error} onRetry={() => load()} />;
+    content = <StatusMessage icon="⚠" title="Couldn't load your trips" message={error} onRetry={() => load()} />;
   } else if (!data) {
     content = (
       <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" aria-busy="true" aria-label="Loading trips">
@@ -75,14 +75,14 @@ export default function Home() {
   } else if (data.length === 0) {
     content = (
       <StatusMessage
-        icon="ðŸ—ºï¸"
+        icon="🗺"
         title="No memories yet"
         message="Start your travel journal by adding your first trip."
         action={{ to: "/addexperience", label: "+ Add your first trip" }}
       />
     );
   } else if (filtered.length === 0) {
-    content = <StatusMessage icon="ðŸ”" title="No trips match your filters" message="Try a different search or trip type." />;
+    content = <StatusMessage icon="🔍" title="No trips match your filters" message="Try a different search or trip type." />;
   } else {
     content = (
       <>

@@ -5,6 +5,7 @@ app_dir: "/opt/repo4hv"
 project_dir: "/opt/repo4hv/UploadedAssignment/Travel_Memory_Assignment-25102026"
 app_port: 3000
 backend_port: 3001
+web_private_ip: "REPLACE_WITH_WEB_PRIVATE_IP"
 mongo_database: "travelmemory"
 mongo_admin_user: "traveladmin"
 mongo_admin_password: "CHANGE_TO_A_STRONG_PASSWORD"
